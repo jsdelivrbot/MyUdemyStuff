@@ -1,12 +1,7 @@
-function b() {
-    console.log('Called b!');
+function greet(name) {
+    name = name || 'default value';
+    console.log('hello ' + name);
 }
 
-b();
-
-console.log(a);
-
-var a = 'Hello World';
-
-console.log(a);
-alert(a);
+greet('eyyy');
+greet();
