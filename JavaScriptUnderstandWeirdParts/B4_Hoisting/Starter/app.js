@@ -1,7 +1,7 @@
-function greet(name) {
-    name = name || 'default value';
-    console.log('hello ' + name);
+function greet(firstName, lastName, language) {
+    console.log(firstName);
+    console.log(lastName);
+    console.log(language);
 }
 
-greet('eyyy');
 greet();
