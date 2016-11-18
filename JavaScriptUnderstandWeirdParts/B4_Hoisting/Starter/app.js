@@ -1,37 +1,72 @@
-// function statement
-function greet(name) {
-    console.log('Hello ' + name);
+function buildFunctions() {
+    var arr = [];
+
+    for (var i = 0; i < 3; i++) {
+        arr.push(
+            function () {
+                console.log(i); // i is aka a free variable
+            }
+        );
+    }
+
+    return arr;
 }
-greet('John');
+
+var fs = buildFunctions();
+
+fs[0]();
+fs[1]();
+fs[2]();
+
+// returns all 3s wat!
+// the reason this gets weird is that
+// console.log does not run in the arr.push().
+// and i = 3 because of the increments in the loop
+// so the leftover variable in the closure is i = 3
+// so now when each function is called they all see i === 3
 
 
-// function expression
-// not initialized but created on the fly when the javascript engine gets to this line.
-var greetFunc = function (name) {
-    console.log('Hello ' + name);
-};
-greetFunc('John'); // invoke with variable pointing to that memory location.
 
-var greeting = function(name) {
-    return 'Hello ' + name;
-}('John'); // IIFE invoked immediately after creation
-console.log(greeting); // notice where we pass the arguments.
 
-// console.log(greeting()); // <-- cant do this because greeting is
-                        // a string and not a function since it was 
-                        // immediately invoked...
+function buildFunctions2() {
+    var arr = [];
 
-// wrap in parens to allow this. otherwise it expects a function name.
-// now it assumes this will be a function expression instead of
-// a function statement.
-var firstName = 'John';
+    for (var i = 0; i < 3; i++) {
+        let j = i; 
+        arr.push(
+            function() {
+                console.log(j);
+            }
+        );
+    }
+    return arr;
+}
 
-(function(name) {
-    var greeting = 'Inside IIFE:  hello';
-    console.log(greeting + ' ' + name);
-})(firstName); // the iffe weeeeeeee wwooooowww uhhh ahhhhhh
+var fs2 = buildFunctions2();
 
-// IIFE is apparently a legit ass tool... prob something about dem
-// modules or some shizzzzzz....
+fs2[0]();
+fs2[1]();
+fs2[2]();
 
-// also we can use the invoke () inside the outer parens or outside them.
+// or with es5
+
+function buildFunctions3() {
+    var arr = [];
+
+    for (var i = 0; i < 3; i++){
+        arr.push(
+            (function(j) {
+                return function() {
+                    console.log(j);
+                };
+            })(i)
+        );
+    }
+    return arr;
+}
+
+var fs3 = buildFunctions3();
+
+fs3[0]();
+fs3[1]();
+fs3[2]();
