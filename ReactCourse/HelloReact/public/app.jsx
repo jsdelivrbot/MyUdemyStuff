@@ -1,18 +1,30 @@
 // create react component
 var Greeter = React.createClass({
+    getDefaultProps: function () {
+        return {
+            name: 'React',
+            message: 'u forgot message dummy'
+        };
+    },
     render: function () {
+        var name = this.props.name;
+        var message = this.props.message;
+
         return (
             <div>
-                <h1>Hello React!</h1>
+                <h1>Hello {name}!</h1>
                 <p>
-                    This is from the component dummy.
+                    {message}
                 </p>
             </div>
         );
     }
 });
 
+var firstName = 'Erik';
+var messageFromSomeDb = 'u remember message dummy';
+
 ReactDOM.render(
-    <Greeter />,
+    <Greeter name={firstName} message={messageFromSomeDb} />,
     document.getElementById('app')
 );
