@@ -25,22 +25,33 @@ var GreeterForm = React.createClass({
 
         // get name from rendered input box
         var name = this.refs.name.value;
+        var message = this.refs.message.value;
+        var updates = {};
 
         // simple validation
         if (name.length > 0) {
             // reset input field.
             this.refs.name.value = '';
-            // actually change the state.
-            // which will be re-rendered.
-            this.props.onNewName(name);
+            // pass variable to updates object
+            updates.name = name;
         }
+
+        if (message.length > 0) {
+            // reset textarea
+            this.refs.message.value = '';
+            // pass variable to updates object.
+            updates.message = message;
+        }
+
+        this.props.onNewData(updates);
     },
     render: function () {
         return (
             <div>
                 <form onSubmit={this.onFormSubmit}>
-                    <input type="text" ref="name"/>
-                    <button>Set Name</button>
+                    <div><input type="text" ref="name" placeholder="enter name"/></div>
+                    <div><textarea ref="message" placeholder="enter message"></textarea></div>
+                    <div><button>Submit</button></div>
                 </form>
             </div>
         );
@@ -60,16 +71,19 @@ var Greeter = React.createClass({
     // similar to get default props gets initial state for the component in this
     // case from the prop
     getInitialState: function () {
-        return {name: this.props.name};
+        return {
+            name: this.props.name,
+            message: this.props.message
+        };
     },
-    handleNewName: function (name) {
-       this.setState({
-           name: name
-       });
+    handleNewData: function (updates) {
+        // can pass updates object right into setState.
+        // this fixes the clearning bug i was having...
+       this.setState(updates);
     },
     render: function () {
         var name = this.state.name;
-        var message = this.props.message;
+        var message = this.state.message;
 
         // common naming convention here
         // method handlenewname prop onnewname
@@ -79,7 +93,7 @@ var Greeter = React.createClass({
         return (
             <div>
                 <GreeterMessage name={name} message={message} />
-                <GreeterForm onNewName={this.handleNewName} />
+                <GreeterForm onNewData={this.handleNewData} />
             </div>
         );
     }
