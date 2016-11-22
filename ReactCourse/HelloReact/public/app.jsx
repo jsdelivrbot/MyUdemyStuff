@@ -1,3 +1,6 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 // presentational component. 
 // take props and render to screen
 // thats it.
@@ -101,7 +104,6 @@ var Greeter = React.createClass({
 });
 
 var firstName = 'Erik';
-var messageFromSomeDb = 'u remember message dummy';
 
 ReactDOM.render(
-    <Greeter name={firstName} message={messageFromSomeDb}/>, document.getElementById('app'));
+    <Greeter name={firstName} />, document.getElementById('app'));
