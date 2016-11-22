@@ -1,3 +1,6 @@
+// presentational component. 
+// take props and render to screen
+// thats it.
 var GreeterMessage = React.createClass({
     render: function () {
         var name = this.props.name;
@@ -12,6 +15,9 @@ var GreeterMessage = React.createClass({
     }
 });
 
+// also presentational component
+// does not maintain its own state.
+// maintaining state is not its job.
 var GreeterForm = React.createClass({
     onFormSubmit: function (e) {
         // prevent browser refresh
@@ -42,6 +48,9 @@ var GreeterForm = React.createClass({
 });
 
 // create react component
+// specifically this is a container component
+// maintains state and updates children
+// remember state can be changed. props cannot.
 var Greeter = React.createClass({
     // get default props. these are different than state. components dont update
     // their own props
@@ -64,6 +73,9 @@ var Greeter = React.createClass({
 
         // common naming convention here
         // method handlenewname prop onnewname
+        // a great container component should only
+        // render its children components
+        // and not do a bunch of its own rendering.
         return (
             <div>
                 <GreeterMessage name={name} message={message} />
