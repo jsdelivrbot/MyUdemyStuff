@@ -1,19 +1,38 @@
 var GreeterMessage = React.createClass({
     render: function () {
+        var name = this.props.name;
+        var message = this.props.message;
+
         return (
             <div>
-                <h1>Some H1</h1>
-                <p>Some paragraph</p>
+                <h1>Hello {name}!</h1>
+                <p>{message}</p>
             </div>
         );
     }
 });
 
 var GreeterForm = React.createClass({
+    onFormSubmit: function (e) {
+        // prevent browser refresh
+        e.preventDefault();
+
+        // get name from rendered input box
+        var name = this.refs.name.value;
+
+        // simple validation
+        if (name.length > 0) {
+            // reset input field.
+            this.refs.name.value = '';
+            // actually change the state.
+            // which will be re-rendered.
+            this.props.onNewName(name);
+        }
+    },
     render: function () {
         return (
             <div>
-                <form>
+                <form onSubmit={this.onFormSubmit}>
                     <input type="text" ref="name"/>
                     <button>Set Name</button>
                 </form>
@@ -24,50 +43,31 @@ var GreeterForm = React.createClass({
 
 // create react component
 var Greeter = React.createClass({
-    // get default props. these are different than state. components dont update their own props
+    // get default props. these are different than state. components dont update
+    // their own props
     getDefaultProps: function () {
         return {name: 'React', message: 'u forgot message dummy'};
     },
-    // similar to get default props
-    // gets initial state for the component
-    // in this case from the prop
+    // similar to get default props gets initial state for the component in this
+    // case from the prop
     getInitialState: function () {
         return {name: this.props.name};
     },
-    onButtonClick: function (e) {
-        // prevent default to make sure no browser refresh
-        // we are doing react spa things... so yeah....
-        e.preventDefault();
-
-        var nameRef = this.refs.name;
-        var name = nameRef.value;
-        // resets input box
-        nameRef.value = '';
-
-        // if simple validation validates do the thing.
-        if (typeof name === 'string' && name.length > 0) {
-            this.setState({name: name});
-        }
+    handleNewName: function (name) {
+       this.setState({
+           name: name
+       });
     },
     render: function () {
         var name = this.state.name;
         var message = this.props.message;
 
+        // common naming convention here
+        // method handlenewname prop onnewname
         return (
             <div>
-                <h1>Hello {name}!</h1>
-                <p>
-                    {message}
-                </p>
-
-                <GreeterMessage />
-
-                <form onSubmit={this.onButtonClick}>
-                    <input type="text" ref="name"/>
-                    <button>Set Name</button>
-                </form>
-
-                <GreeterForm />
+                <GreeterMessage name={name} message={message} />
+                <GreeterForm onNewName={this.handleNewName} />
             </div>
         );
     }
