@@ -3,6 +3,7 @@
 // thats it.
 var GreeterMessage = React.createClass({
     render: function () {
+        // again uses props. not state.
         var name = this.props.name;
         var message = this.props.message;
 
