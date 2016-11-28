@@ -48,36 +48,7 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
-
-	// presentational component. 
-	// take props and render to screen
-	// thats it.
-	var GreeterMessage = React.createClass({
-	    displayName: 'GreeterMessage',
-
-	    render: function render() {
-	        // again uses props. not state.
-	        var name = this.props.name;
-	        var message = this.props.message;
-
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	                'h1',
-	                null,
-	                'Hello ',
-	                name,
-	                '!'
-	            ),
-	            React.createElement(
-	                'p',
-	                null,
-	                message
-	            )
-	        );
-	    }
-	});
+	var GreeterMessage = __webpack_require__(159);
 
 	// also presentational component
 	// does not maintain its own state.
@@ -19878,6 +19849,51 @@
 
 	module.exports = __webpack_require__(3);
 
+
+/***/ },
+/* 159 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	// presentational component. 
+	// take props and render to screen
+	// thats it.
+	var GreeterMessage = React.createClass({
+	    displayName: 'GreeterMessage',
+
+	    render: function render() {
+	        // again uses props. not state.
+	        var name = this.props.name;
+	        var message = this.props.message;
+
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	                'h1',
+	                null,
+	                'Hello ',
+	                name,
+	                '!'
+	            ),
+	            React.createElement(
+	                'p',
+	                null,
+	                message
+	            )
+	        );
+	    }
+	});
+
+	// need to actually export
+	// to make this available
+	// this is kinda like a return.
+	// so now when someone requires this file
+	// they get the GreeterMessage component back.
+	module.exports = GreeterMessage;
 
 /***/ }
 /******/ ]);
