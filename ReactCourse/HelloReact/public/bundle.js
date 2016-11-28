@@ -48,113 +48,7 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
-	var GreeterMessage = __webpack_require__(159);
-
-	// also presentational component
-	// does not maintain its own state.
-	// maintaining state is not its job.
-	var GreeterForm = React.createClass({
-	    displayName: 'GreeterForm',
-
-	    onFormSubmit: function onFormSubmit(e) {
-	        // prevent browser refresh
-	        e.preventDefault();
-
-	        // get name from rendered input box
-	        var name = this.refs.name.value;
-	        var message = this.refs.message.value;
-	        var updates = {};
-
-	        // simple validation
-	        if (name.length > 0) {
-	            // reset input field.
-	            this.refs.name.value = '';
-	            // pass variable to updates object
-	            updates.name = name;
-	        }
-
-	        if (message.length > 0) {
-	            // reset textarea
-	            this.refs.message.value = '';
-	            // pass variable to updates object.
-	            updates.message = message;
-	        }
-
-	        this.props.onNewData(updates);
-	    },
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	                'form',
-	                { onSubmit: this.onFormSubmit },
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement('input', { type: 'text', ref: 'name', placeholder: 'enter name' })
-	                ),
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement('textarea', { ref: 'message', placeholder: 'enter message' })
-	                ),
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement(
-	                        'button',
-	                        null,
-	                        'Submit'
-	                    )
-	                )
-	            )
-	        );
-	    }
-	});
-
-	// create react component
-	// specifically this is a container component
-	// maintains state and updates children
-	// remember state can be changed. props cannot.
-	var Greeter = React.createClass({
-	    displayName: 'Greeter',
-
-	    // get default props. these are different than state. components dont update
-	    // their own props
-	    getDefaultProps: function getDefaultProps() {
-	        return { name: 'React', message: 'u forgot message dummy' };
-	    },
-	    // similar to get default props gets initial state for the component in this
-	    // case from the prop
-	    getInitialState: function getInitialState() {
-	        return {
-	            name: this.props.name,
-	            message: this.props.message
-	        };
-	    },
-	    handleNewData: function handleNewData(updates) {
-	        // can pass updates object right into setState.
-	        // this fixes the clearning bug i was having...
-	        this.setState(updates);
-	    },
-	    render: function render() {
-	        var name = this.state.name;
-	        var message = this.state.message;
-
-	        // common naming convention here
-	        // method handlenewname prop onnewname
-	        // a great container component should only
-	        // render its children components
-	        // and not do a bunch of its own rendering.
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(GreeterMessage, { name: name, message: message }),
-	            React.createElement(GreeterForm, { onNewData: this.handleNewData })
-	        );
-	    }
-	});
+	var Greeter = __webpack_require__(159);
 
 	var firstName = 'Erik';
 
@@ -19857,6 +19751,61 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var GreeterMessage = __webpack_require__(160);
+	var GreeterForm = __webpack_require__(161);
+
+	// create react component
+	// specifically this is a container component
+	// maintains state and updates children
+	// remember state can be changed. props cannot.
+	var Greeter = React.createClass({
+	    displayName: 'Greeter',
+
+	    // get default props. these are different than state. components dont update
+	    // their own props
+	    getDefaultProps: function getDefaultProps() {
+	        return { name: 'React', message: 'u forgot message dummy' };
+	    },
+	    // similar to get default props gets initial state for the component in this
+	    // case from the prop
+	    getInitialState: function getInitialState() {
+	        return {
+	            name: this.props.name,
+	            message: this.props.message
+	        };
+	    },
+	    handleNewData: function handleNewData(updates) {
+	        // can pass updates object right into setState.
+	        // this fixes the clearning bug i was having...
+	        this.setState(updates);
+	    },
+	    render: function render() {
+	        var name = this.state.name;
+	        var message = this.state.message;
+
+	        // common naming convention here
+	        // method handlenewname prop onnewname
+	        // a great container component should only
+	        // render its children components
+	        // and not do a bunch of its own rendering.
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(GreeterMessage, { name: name, message: message }),
+	            React.createElement(GreeterForm, { onNewData: this.handleNewData })
+	        );
+	    }
+	});
+
+	module.exports = Greeter;
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
 
 	// presentational component. 
 	// take props and render to screen
@@ -19894,6 +19843,80 @@
 	// so now when someone requires this file
 	// they get the GreeterMessage component back.
 	module.exports = GreeterMessage;
+
+/***/ },
+/* 161 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	// also presentational component
+	// does not maintain its own state.
+	// maintaining state is not its job.
+	var GreeterForm = React.createClass({
+	    displayName: 'GreeterForm',
+
+	    onFormSubmit: function onFormSubmit(e) {
+	        // prevent browser refresh
+	        e.preventDefault();
+
+	        // get name from rendered input box
+	        var name = this.refs.name.value;
+	        var message = this.refs.message.value;
+	        var updates = {};
+
+	        // simple validation
+	        if (name.length > 0) {
+	            // reset input field.
+	            this.refs.name.value = '';
+	            // pass variable to updates object
+	            updates.name = name;
+	        }
+
+	        if (message.length > 0) {
+	            // reset textarea
+	            this.refs.message.value = '';
+	            // pass variable to updates object.
+	            updates.message = message;
+	        }
+
+	        this.props.onNewData(updates);
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	                'form',
+	                { onSubmit: this.onFormSubmit },
+	                React.createElement(
+	                    'div',
+	                    null,
+	                    React.createElement('input', { type: 'text', ref: 'name', placeholder: 'enter name' })
+	                ),
+	                React.createElement(
+	                    'div',
+	                    null,
+	                    React.createElement('textarea', { ref: 'message', placeholder: 'enter message' })
+	                ),
+	                React.createElement(
+	                    'div',
+	                    null,
+	                    React.createElement(
+	                        'button',
+	                        null,
+	                        'Submit'
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+
+	// again gotta do da export moves
+	module.exports = GreeterForm;
 
 /***/ }
 /******/ ]);
