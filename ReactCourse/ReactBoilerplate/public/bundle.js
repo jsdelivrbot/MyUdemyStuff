@@ -46,13 +46,27 @@
 
 	'use strict';
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
-	var Greeter = __webpack_require__(159);
 
-	var firstName = 'Not Erik';
+	var objOne = {
+	    name: 'erik',
+	    location: 'royal oak'
+	};
 
-	ReactDOM.render(React.createElement(Greeter, { name: firstName }), document.getElementById('app'));
+	var objTwo = _extends({
+	    age: '28'
+	}, objOne);
+
+	console.log(objTwo);
+
+	ReactDOM.render(React.createElement(
+	    'h1',
+	    null,
+	    'Boilerplate app!'
+	), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -8042,6 +8056,10 @@
 	  }
 	};
 
+	function registerNullComponentID() {
+	  ReactEmptyComponentRegistry.registerNullComponentID(this._rootNodeID);
+	}
+
 	var ReactEmptyComponent = function (instantiate) {
 	  this._currentElement = null;
 	  this._rootNodeID = null;
@@ -8050,7 +8068,7 @@
 	assign(ReactEmptyComponent.prototype, {
 	  construct: function (element) {},
 	  mountComponent: function (rootID, transaction, context) {
-	    ReactEmptyComponentRegistry.registerNullComponentID(rootID);
+	    transaction.getReactMountReady().enqueue(registerNullComponentID, this);
 	    this._rootNodeID = rootID;
 	    return ReactReconciler.mountComponent(this._renderedComponent, rootID, transaction, context);
 	  },
@@ -18773,7 +18791,7 @@
 
 	'use strict';
 
-	module.exports = '0.14.7';
+	module.exports = '0.14.8';
 
 /***/ },
 /* 147 */
@@ -19743,180 +19761,6 @@
 
 	module.exports = __webpack_require__(3);
 
-
-/***/ },
-/* 159 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var GreeterMessage = __webpack_require__(160);
-	var GreeterForm = __webpack_require__(161);
-
-	// create react component
-	// specifically this is a container component
-	// maintains state and updates children
-	// remember state can be changed. props cannot.
-	var Greeter = React.createClass({
-	    displayName: 'Greeter',
-
-	    // get default props. these are different than state. components dont update
-	    // their own props
-	    getDefaultProps: function getDefaultProps() {
-	        return { name: 'React', message: 'u forgot message dummy' };
-	    },
-	    // similar to get default props gets initial state for the component in this
-	    // case from the prop
-	    getInitialState: function getInitialState() {
-	        return {
-	            name: this.props.name,
-	            message: this.props.message
-	        };
-	    },
-	    handleNewData: function handleNewData(updates) {
-	        // can pass updates object right into setState.
-	        // this fixes the clearning bug i was having...
-	        this.setState(updates);
-	    },
-	    render: function render() {
-	        var name = this.state.name;
-	        var message = this.state.message;
-
-	        // common naming convention here
-	        // method handlenewname prop onnewname
-	        // a great container component should only
-	        // render its children components
-	        // and not do a bunch of its own rendering.
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(GreeterMessage, { name: name, message: message }),
-	            React.createElement(GreeterForm, { onNewData: this.handleNewData })
-	        );
-	    }
-	});
-
-	module.exports = Greeter;
-
-/***/ },
-/* 160 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	// presentational component. 
-	// take props and render to screen
-	// thats it.
-	var GreeterMessage = React.createClass({
-	    displayName: 'GreeterMessage',
-
-	    render: function render() {
-	        // again uses props. not state.
-	        var name = this.props.name;
-	        var message = this.props.message;
-
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	                'h1',
-	                null,
-	                'Hello ',
-	                name,
-	                '!'
-	            ),
-	            React.createElement(
-	                'p',
-	                null,
-	                message
-	            )
-	        );
-	    }
-	});
-
-	// need to actually export
-	// to make this available
-	// this is kinda like a return.
-	// so now when someone requires this file
-	// they get the GreeterMessage component back.
-	module.exports = GreeterMessage;
-
-/***/ },
-/* 161 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	// also presentational component
-	// does not maintain its own state.
-	// maintaining state is not its job.
-	var GreeterForm = React.createClass({
-	    displayName: 'GreeterForm',
-
-	    onFormSubmit: function onFormSubmit(e) {
-	        // prevent browser refresh
-	        e.preventDefault();
-
-	        // get name from rendered input box
-	        var name = this.refs.name.value;
-	        var message = this.refs.message.value;
-	        var updates = {};
-
-	        // simple validation
-	        if (name.length > 0) {
-	            // reset input field.
-	            this.refs.name.value = '';
-	            // pass variable to updates object
-	            updates.name = name;
-	        }
-
-	        if (message.length > 0) {
-	            // reset textarea
-	            this.refs.message.value = '';
-	            // pass variable to updates object.
-	            updates.message = message;
-	        }
-
-	        this.props.onNewData(updates);
-	    },
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	                'form',
-	                { onSubmit: this.onFormSubmit },
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement('input', { type: 'text', ref: 'name', placeholder: 'enter name' })
-	                ),
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement('textarea', { ref: 'message', placeholder: 'enter message' })
-	                ),
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement(
-	                        'button',
-	                        null,
-	                        'Submit'
-	                    )
-	                )
-	            )
-	        );
-	    }
-	});
-
-	// again gotta do da export moves
-	module.exports = GreeterForm;
 
 /***/ }
 /******/ ]);
