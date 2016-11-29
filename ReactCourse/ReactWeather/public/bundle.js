@@ -24935,7 +24935,24 @@
 	var Weather = React.createClass({
 	    displayName: 'Weather',
 
+	    getInitialState: function getInitialState() {
+	        return {
+	            location: 'Miami',
+	            temp: 88
+	        };
+	    },
+	    handleSearch: function handleSearch(location) {
+	        this.setState({
+	            location: location,
+	            temp: 23
+	        });
+	    },
 	    render: function render() {
+	        var _state = this.state,
+	            temp = _state.temp,
+	            location = _state.location;
+
+
 	        return React.createElement(
 	            'div',
 	            null,
@@ -24944,8 +24961,8 @@
 	                null,
 	                'Weather Component'
 	            ),
-	            React.createElement(WeatherForm, null),
-	            React.createElement(WeatherMessage, null)
+	            React.createElement(WeatherForm, { onSearch: this.handleSearch }),
+	            React.createElement(WeatherMessage, { temp: temp, location: location })
 	        );
 	    }
 	});
@@ -24956,32 +24973,44 @@
 /* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
 
 	var WeatherForm = React.createClass({
-	    displayName: "WeatherForm",
+	    displayName: 'WeatherForm',
 
+	    onFormSubmit: function onFormSubmit(e) {
+	        e.preventDefault();
+
+	        // data from input
+	        var location = this.refs.location.value;
+
+	        if (location.length > 0) {
+	            // clear input and call parent function for search.
+	            this.refs.location.value = '';
+	            this.props.onSearch(location);
+	        }
+	    },
 	    render: function render() {
 	        return React.createElement(
-	            "div",
+	            'div',
 	            null,
 	            React.createElement(
-	                "form",
-	                null,
+	                'form',
+	                { onSubmit: this.onFormSubmit },
 	                React.createElement(
-	                    "div",
+	                    'div',
 	                    null,
-	                    React.createElement("input", { type: "text", placeholder: "Enter city name" })
+	                    React.createElement('input', { type: 'text', ref: 'location', placeholder: 'Enter city name' })
 	                ),
 	                React.createElement(
-	                    "div",
+	                    'div',
 	                    null,
 	                    React.createElement(
-	                        "button",
+	                        'button',
 	                        null,
-	                        "Get Weather"
+	                        'Get Weather'
 	                    )
 	                )
 	            )
@@ -25003,10 +25032,18 @@
 	    displayName: 'WeatherMessage',
 
 	    render: function render() {
+	        var _props = this.props,
+	            temp = _props.temp,
+	            location = _props.location;
+
+
 	        return React.createElement(
 	            'h3',
 	            null,
-	            'its cold in michigan'
+	            'Its ',
+	            temp,
+	            ' in ',
+	            location
 	        );
 	    }
 	});
