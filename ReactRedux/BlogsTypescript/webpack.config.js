@@ -2,19 +2,30 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: [
+    './src/index.tsx'
+  ],
+
+  devtool: 'source-maps',
 
   output: {
     filename: 'bundle.js',
-    path: path.join(__dirname, 'dist')
+    path: path.join(__dirname, 'dist'),
+    publicPath: './dist'
+  },
+
+  devServer: {
+    port: 3000,
+    historyApiFallback: true,
+    inline: true,
   },
 
   resolve: {
-    extensions: ['.js', '.ts', '.tsx'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
 
   module: {
-    rules: [
+    loaders: [
       // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
       { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
 
