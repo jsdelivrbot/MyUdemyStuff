@@ -6,28 +6,20 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-    path: __dirname + '/dist',
-    publicPath: '/'
+    path: path.join(__dirname, 'dist')
   },
 
-  devtool: 'source-map',
-
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".json"]
+    extensions: ['.js', '.ts', '.tsx'],
   },
 
   module: {
     rules: [
       // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
 
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      { test: /\.js$/, loader: 'source-map-loader' }
     ]
-  },
-
-  devServer: {
-    historyApiFallback: true,
-    contentBase: './'
   }
-}
+};
