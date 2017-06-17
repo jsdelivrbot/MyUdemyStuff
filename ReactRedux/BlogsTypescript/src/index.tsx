@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { App } from './components/app';
+const createStoreWithMiddleware = applyMiddleware()(createStore);
+
+import { PostIndex } from './components';
 
 ReactDOM.render(
-  <App />,
-  document.querySelector('root'),
-);
+  <BrowserRouter>
+    <div>
+      <Switch>
+        <Route path="/" component={PostIndex} />
+      </Switch>
+    </div>
+  </BrowserRouter>,
+document.querySelector('#root'));
