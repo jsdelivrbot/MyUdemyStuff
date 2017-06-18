@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+interface IProps extends RouteComponentProps<any> {
+  test: string;
+}
 
 // interesting needed to set props to any at first
 // to be able to pass this component to the router.
-class PostsIndex extends Component<any, {}> {
+class PostsIndex extends Component<IProps, {}> {
   render() {
     return (
       <div>
