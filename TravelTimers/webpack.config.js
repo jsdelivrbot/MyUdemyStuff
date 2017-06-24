@@ -51,6 +51,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       chunksSortMode: 'dependency'
-    })
+    }),
+    new webpack.WatchIgnorePlugin([
+      /css\.d\.ts/
+    ])
   ]
 }
