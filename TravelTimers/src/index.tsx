@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { FuckYouToo } from './fuck-you-too';
-
-import * as styles from './style.css';
+import { ChillComponent } from './components';
+import styles from './style/style.css';
 
 const App: React.SFC<{}> = props => (
   <div className={styles.awesomeStyle}>
-    <FuckYouToo />
-    also fuck this
+    aight lets be chill
+    <ChillComponent />
   </div>
 );
 
