@@ -10,7 +10,7 @@ module.exports = {
   // vendor bundles from our code.
   entry: {
     bundle: './src/index.tsx',
-    vendor: ['react', 'react-dom', 'react-router', 'react-router-dom']
+    vendor: ['react', 'react-dom', 'react-router', 'react-router-dom', 'rxjs']
   },
   output: {
     filename: '[name].[chunkhash].js',

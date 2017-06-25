@@ -1,15 +1,68 @@
-import React, { Component } from 'react';
+import React, { Component, SyntheticEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/dom/ajax';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
 
-interface ITravelTimesProps extends RouteComponentProps<any> {
-  test: string;
+const API_KEY = 'AIzaSyCEBjRru2_gciS62Rs_OXY3VB1jxAJ4LXQ';
+// tslint:disable-next-line:max-line-length
+const URL = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=`{$API_KEY}`';
+
+interface ITravelTimesState {
+  origin: string;
+  destination: string;
 }
 
-class TravelTimes extends Component<ITravelTimesProps, {}> {
+class TravelTimes extends Component<RouteComponentProps<any>, ITravelTimesState> {
+  constructor(props: RouteComponentProps<any>) {
+    super(props);
+
+    this.state = { origin: '', destination: '' };
+  }
+
+  // define these as lambdas to get around having to use .bind(this) from onChange callsite
+  handleOriginChange = ({ currentTarget: { value } }: SyntheticEvent<HTMLInputElement>) => {
+    this.setState({ origin: value });
+  }
+
+  handleDestinationChange = ({ currentTarget: { value } }: SyntheticEvent<HTMLInputElement>) => {
+    this.setState({ destination: value });
+  }
+
+  handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    Observable.ajax(URL)
+      .map(r => r.response)
+      .subscribe(meh => console.log(meh));
+  }
+
   render() {
+    const { origin, destination } = this.state;
+
     return (
       <div>
-        travel times will go here.
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            value={origin}
+            placeholder="origin"
+            onChange={this.handleOriginChange}
+            autoFocus={true}
+          />
+          <input
+            type="text"
+            value={destination}
+            placeholder="destination"
+            onChange={this.handleDestinationChange}
+          />
+          <button type="submit">submit</button>
+        </form>
       </div>
     );
   }
