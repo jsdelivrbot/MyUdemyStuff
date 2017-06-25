@@ -14,3 +14,5 @@ class TravelTimes extends Component<ITravelTimesProps, {}> {
     );
   }
 }
+
+export default TravelTimes;

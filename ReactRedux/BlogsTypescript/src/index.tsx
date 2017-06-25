@@ -16,4 +16,4 @@ ReactDOM.render(
       </Switch>
     </div>
   </BrowserRouter>,
-document.querySelector('#root'));
+  document.querySelector('#root'));

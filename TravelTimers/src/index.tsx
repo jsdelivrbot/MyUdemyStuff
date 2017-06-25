@@ -7,7 +7,7 @@ import { ChillComponent, TravelTimes } from './components';
 ReactDOM.render(
   <Router>
     <Switch>
-      <Route path="/" component={ChillComponent} />
+      <Route exact={true} path="/" component={ChillComponent} />
       <Route path="/traveltimes" component={TravelTimes} />
     </Switch>
   </Router>,
