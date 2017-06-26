@@ -10,7 +10,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 
-const API_KEY = encodeURI('AIzaSyCEBjRru2_gciS62Rs_OXY3VB1jxAJ4LXQ');
+const API_KEY = encodeURI('AIzaSyB_GwIPvk_1Xr2SS1s5n4mnVdbMpPTsfoM');
 
 // tslint:disable-next-line:max-line-length
 const URL = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=${API_KEY}`;
@@ -36,17 +36,12 @@ class TravelTimes extends Component<RouteComponentProps<any>, ITravelTimesState>
     this.setState({ destination: value });
   }
 
-  handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
-    const headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    headers.append('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');
-
+  handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     Observable.ajax({
       crossDomain: true,
       url: URL,
-      headers
+      responseType: 'json'
     }).subscribe(data => console.log(data));
   }
 
