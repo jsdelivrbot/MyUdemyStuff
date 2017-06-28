@@ -21,11 +21,11 @@ interface ITravelTimesState {
 }
 
 class TravelTimes extends Component<RouteComponentProps<any>, ITravelTimesState> {
-  constructor(props: RouteComponentProps<any>) {
-    super(props);
-
-    this.state = { origin: '', destination: '' };
-  }
+  // this is identical in function to setting up state in a constructor function
+  state: ITravelTimesState = {
+    origin: '',
+    destination: ''
+  };
 
   // define these as lambdas to get around having to use .bind(this) from onChange callsite
   handleOriginChange = ({ currentTarget: { value } }: SyntheticEvent<HTMLInputElement>) => {
