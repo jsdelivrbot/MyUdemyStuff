@@ -38,11 +38,8 @@ class TravelTimes extends Component<RouteComponentProps<any>, ITravelTimesState>
 
   handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    Observable.ajax({
-      crossDomain: true,
-      url: URL,
-      responseType: 'json'
-    }).subscribe(data => console.log(data));
+    // tslint:disable-next-line:no-console
+    console.log('google is annoying and does not do CORS for distance matrxi api...');
   }
 
   render() {
